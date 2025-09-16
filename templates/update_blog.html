@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title%}Update Blog{% endblock title %}
+{% block content %}
+<div style="display: flex; align-items: center; justify-content: center;height: 100vh;">
+
+    <form class="row g-3 w-50" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Update Blog</h3>
+    <div class="col-md-6">
+    <label for="inputtitle4" class="form-label">Title</label>
+    <input type="text" class="form-control" id="inputtitle4" name="title" value="{{blog.title}}">
+  </div>
+  <div class="col-md-6">
+    <label for="inputbg_image4" class="form-label">Sub Title</label>
+    <input type="text" name="sub_title" class="form-control" id="inputsub_title4" value="{{blog.sub_title}}" >
+  </div>
+  <div class="col-md-12">
+    <label for="inputcontentr4" class="form-label">Content</label>
+    <textarea name="content" class="form-control" id="inputcontentr4" value="{{blog.content}}"></textarea>
+  </div>
+  <div class="col-md-6">
+    <label for="inputbg_image4" class="form-label">Background Image</label>
+    <input type="file" name="bg_image" class="form-control" id="inputbg_image4" value="{{blog.bg_image}}">
+  </div>
+  <input type="hidden" name="created_by" value="{{request.user.profile.id}}">
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Update</button>
+  </div>
+   {% for message in messages%}
+     <div class="alert alert-{{ message.tags }}">
+    {{message}}
+    </div>
+    {% endfor %}
+    </form>
+
+</div>
+
+
+
+{%endblock content%}

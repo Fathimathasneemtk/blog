@@ -1,0 +1,124 @@
+ 
+{% extends 'base.html' %}
+{% block title %}View Blog{% endblock %}
+{% block content %}
+ 
+<div id="content">
+  <div class="dropdown">
+  <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Action
+  </a>
+ 
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{% url 'update_blog' blog.id %}">Update</a></li>
+    <li><a class="dropdown-item" href="{% url 'delete_blog' blog.id %}">Delete</a></li>
+  </ul>
+</div>
+ 
+<div style="display:flex;justify-content: center;align-items: center;gap:2rem;" class="mb-2">
+ 
+ 
+ 
+    <div class="card mb-2" style="width: 100%;">
+      <div style="display: flex; justify-content: center; align-items: center;">
+         <img src="{{blog.bg_image.url}}" class="card-img-top w-75" alt="{{blog.title}}">
+      </div>
+ 
+  <div class="card-body">
+    <h5 class="card-title">{{blog.title}}</h5>
+    <h6 class="card-title">{{blog.sub_title}}</h6>
+    <p class="card-text">{{blog.content}}</p>
+  </div>
+    </div>
+ 
+ 
+ 
+</div>
+<div id="comment_section" style="display:flex;justify-content: center;">
+   <div style="width: 70%;">
+    <h5>Comment section</h5>
+  {% for comment in comments %}
+  <div class="card">
+  <div class="card-body" id="comment-box-{{comment.id}}">
+    <small style="float: right;">{{comment.user.user.username}}</small>
+    <p id="comment-{{comment.id}}-text">{{comment.comment_text}}</p>
+ 
+    <small style="float: right;">{{comment.created_at}}</small>
+    <small style="float: left;">{{comment.updated_at}}</small>
+ 
+  </div>
+  <form id="comment-form-{{comment.id}}" style="display: none;" action="{% url 'update_comment' comment.id %}" method="POST">
+      {% csrf_token %}
+      <textarea  name="comment_text" class="form-control">{{comment.comment_text}}</textarea>
+      <input name="blog" value="{{blog.id}}" type="hidden">
+      <input name="user" value="{{request.user.profile.id}}" type="hidden">
+ 
+      <input type="submit" value="update comment" class="form-control bg-secondary">
+    </form>
+ 
+</div>
+<div class="dropdown">
+  <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Action
+  </a>
+ 
+  <ul class="dropdown-menu">
+    <li><button class="dropdown-item" onclick="update_comment({{ comment.id }})">Update</button></li>
+    <li><a class="dropdown-item" href="{% url 'delete_comment' comment.id %}">Delete</a></li>
+  </ul>
+</div>
+ 
+ 
+  {% endfor %}
+ 
+      <input type="button" value="add_comment" id="show_comment_btn" class="form-control btn-outline-success" onclick="show_comment()">
+    <form id="comment_form" style="display: none;" action="{% url 'add_comment' blog.id %}" method="POST">
+      {% csrf_token %}
+      <textarea placeholder="comment here" name="comment_text" class="form-control"></textarea>
+      <input name="blog" value="{{blog.id}}" type="hidden">
+      <input name="user" value="{{request.user.profile.id}}" type="hidden">
+ 
+      <input type="submit" value="add comment" class="form-control btn-outline-success">
+    </form>
+ 
+    </div>
+ 
+</div>
+ 
+</div>
+ 
+ 
+ 
+ 
+ 
+{% endblock %}
+{%block script %}
+<script>
+  function show_comment(){
+ 
+    let el = document.getElementById("comment_form");
+    let btn=document.getElementById("show_comment_btn")
+    if (el.style.display === "none" || window.getComputedStyle(el).display === "none" ) {
+        el.style.display = "block";
+        btn.style.display="none" // or whatever display style it should be
+    } else {
+        el.style.display = "none";
+        btn.style.display="none"
+    }
+ 
+  }
+  function update_comment(comment_id){
+    console.log(comment_id)
+    let el=document.getElementById(`comment-form-${comment_id}`);
+    if (el.style.display === "none" || window.getComputedStyle(el).display === "none" ) {
+        el.style.display = "block";
+ 
+    } else {
+        el.style.display = "none";
+ 
+    }
+  }
+ 
+ 
+</script>
+{% endblock%}

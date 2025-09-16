@@ -1,0 +1,59 @@
+ 
+{% extends "base.html" %}
+{% block title%}register{% endblock title %}
+{% block content %}
+<div style="display: flex; align-items: center; justify-content: center;height: 100vh;">
+ 
+ 
+    <form class="row g-3 w-50" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Register</h3>
+    <div class="col-md-12">
+    <label for="inputUser4" class="form-label">Username</label>
+    <input type="text" class="form-control" id="inputUsername4" name="username">
+  </div>
+  <div class="col-md-6">
+    <label for="inputfirst_name4" class="form-label">First Name</label>
+    <input type="text" name="first_name" class="form-control" id="inputfirst_name4" >
+  </div>
+  <div class="col-md-6">
+    <label for="inputlast_name4" class="form-label">Last Name</label>
+    <input type="text" name="last_name" class="form-control" id="inputlast_name4">
+  </div>
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">Email</label>
+    <input name="email" type="email" class="form-control" id="inputEmail4">
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label">Password</label>
+    <input type="password" name="password" class="form-control" id="inputPassword4">
+  </div>
+  <div class="col-md-6">
+    <label for="inputprofile_pic4" class="form-label">Profile pic</label>
+    <input name="profile_pic" type="file" class="form-control" id="inputprofile_pic4">
+  </div>
+  <div class="col-md-6">
+    <label for="inputcontenct_no4" class="form-label">Contact Number</label>
+    <input name="contact_no" type="number" class="form-control" id="inputcontenct_no4">
+  </div>
+  <div class="col-md-6">
+    <label for="inputtype4" class="form-label">Category user</label>
+    <input name="type" type="number" class="form-control" id="inputtype4">
+  </div>
+ 
+ 
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </div>
+   {% for message in messages%}
+     <div class="alert alert-{{ message.tags }}">
+    {{message}}
+    </div>
+    {% endfor %}
+    </form>
+ 
+</div>
+ 
+ 
+ 
+{%endblock content%}
