@@ -11,7 +11,7 @@
   <div class="card-body">
     <h5 class="card-title">{{blog.title}}</h5>
     <h6 class="card-title">{{blog.sub_title}}</h6>
-    <p class="card-text">{{blog.content}}</p>
+    <p class="card-text">{{ blog.content|truncatewords:30 }}</p>
     <a href="{% url 'view_blog' blog.id %}" class="btn btn-primary">Read more</a>
   </div>
     </div>
